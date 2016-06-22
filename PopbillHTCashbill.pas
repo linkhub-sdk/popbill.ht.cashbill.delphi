@@ -269,6 +269,7 @@ begin
         if jobID = '' then
         begin
                 raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 입력되지 않았습니다.');
+                exit;
         end;
 
 
@@ -287,6 +288,12 @@ begin
 
         responseJson := httpget('/HomeTax/Cashbill/JobList',CorpNum,'');
 
+        if responseJson = '[]' then
+        begin
+                raise EPopbillException.Create(-99999999, '작업 요청 목록이 존재하지 않습니다.');
+                exit;
+        end;
+        
         try
                 jSons := ParseJsonList(responseJson);
                 SetLength(result,Length(jSons));
@@ -314,6 +321,7 @@ begin
         if jobID = '' then
         begin
                 raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 입력되지 않았습니다.');
+                exit;
         end;
 
         
