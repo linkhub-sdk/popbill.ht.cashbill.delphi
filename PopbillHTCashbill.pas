@@ -103,6 +103,7 @@ type
                 pageCount       : Integer;
                 message         : String;
                 list            : THometaxCBList;
+                destructor Destroy; override;
         end;
 
 
@@ -146,6 +147,16 @@ type
         end;
 
 implementation
+destructor THomeTaxCBSearchList.Destroy;
+var
+  I: Integer;
+begin
+  for I := 0 to Length(list)-1 do
+    if Assigned(list[i]) then
+      list[i].Free;
+    SetLength(list, 0);
+    inherited Destroy;
+end;
 
 constructor THometaxCBService.Create(LinkID : String; SecretKey : String);
 begin
