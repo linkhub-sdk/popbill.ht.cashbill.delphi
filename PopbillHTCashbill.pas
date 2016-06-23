@@ -83,12 +83,12 @@ type
                 totalAmount     : string;
                 franchiseCorpNum        : string;
                 franchiseCorpName       : string;
-                franchiseCorpType       : string;
+                franchiseCorpType       : Integer;
                 identityNum             : string;
-                identityNumType         : string;
+                identityNumType         : Integer;
                 customerName            : string;
                 cardOwnerName           : string;
-                deductionType           : string;
+                deductionType           : Integer;
 
         end;
 
@@ -380,12 +380,12 @@ begin
                         result.list[i].totalAmount := getJSonString(jSons[i], 'totalAmount');
                         result.list[i].franchiseCorpNum := getJSonString(jSons[i], 'franchiseCorpNum');
                         result.list[i].franchiseCorpName := getJSonString(jSons[i], 'franchiseCorpName');
-                        result.list[i].franchiseCorpType := getJSonString(jSons[i], 'franchiseCorpType');
+                        result.list[i].franchiseCorpType := getJSonInteger(jSons[i], 'franchiseCorpType');
                         result.list[i].identityNum := getJSonString(jSons[i], 'identityNum');
-                        result.list[i].identityNumType := getJSonString(jSons[i], 'identityNumType');
+                        result.list[i].identityNumType := getJSonInteger(jSons[i], 'identityNumType');
                         result.list[i].customerName := getJSonString(jSons[i], 'customerName');
                         result.list[i].cardOwnerName := getJSonString(jSons[i], 'cardOwnerName');
-                        result.list[i].deductionType := getJSonString(jSons[i], 'deductionType');
+                        result.list[i].deductionType := getJSonInteger(jSons[i], 'deductionType');
                 end;
 
         except on E:Exception do
