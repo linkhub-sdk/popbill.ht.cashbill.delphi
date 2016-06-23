@@ -20,7 +20,7 @@ uses
         Linkhub;
 type
 
-        EnumMgtKeyType = (SELL,BUY);
+        EnumQueryType = (SELL,BUY);
 
 
         THometaxCBChargeInfo = class
@@ -118,7 +118,7 @@ type
                 function GetChargeInfo (CorpNum : string) : THometaxCBChargeInfo;
                 
                 // 수집 요청
-                function RequestJob (CorpNum : string; MgtKeyType:EnumMgtKeyType; SDate: String; EDate :String) : string;
+                function RequestJob (CorpNum : string; queryType:EnumQueryType; SDate: String; EDate :String) : string;
 
                 // 수집 상태 확인
                 function GetJobState ( CorpNum : string; jobID : string) : THometaxCBJobInfo;
@@ -394,12 +394,12 @@ begin
 
 end;
 
-function THometaxCBService.RequestJob (CorpNum : string;  MgtKeyType:EnumMgtKeyType; SDate: String; EDate: String) : string;
+function THometaxCBService.RequestJob (CorpNum : string;  queryType:EnumQueryType; SDate: String; EDate: String) : string;
 var
         responseJson : string;
 
 begin
-        responseJson := httppost('/HomeTax/Cashbill/'+GetEnumName(TypeInfo(EnumMgtKeyType),integer(MgtKeyType))+'?SDate='+SDate+'&&EDate='+EDate, CorpNum, '', '', '');
+        responseJson := httppost('/HomeTax/Cashbill/'+GetEnumName(TypeInfo(EnumQueryType),integer(queryType))+'?SDate='+SDate+'&&EDate='+EDate, CorpNum, '', '', '');
         result := getJsonString(responseJson, 'jobID');
 
 end;
