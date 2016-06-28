@@ -266,9 +266,9 @@ var
         responseJson : string;
 
 begin
-        if jobID = '' then
+        if Not ( length ( jobID ) = 18 ) then
         begin
-                raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 입력되지 않았습니다.');
+                raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 올바르지 않습니다.');
                 exit;
         end;
 
@@ -318,9 +318,9 @@ var
         i : integer;
         jSons : ArrayOfString;
 begin
-        if jobID = '' then
+        if Not ( length ( jobID ) = 18 ) then
         begin
-                raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 입력되지 않았습니다.');
+                raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 올바르지 않습니다.');
                 exit;
         end;
 
@@ -414,13 +414,13 @@ var
         tradeUsageList : String;
         i : integer;
 begin
-        if jobID = '' then
+        if Not ( length ( jobID ) = 18 ) then
         begin
-                raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 입력되지 않았습니다.');
-                Exit;
+                raise EPopbillException.Create(-99999999, '작업아이디(jobID)가 올바르지 않습니다.');
+                exit;
         end;
 
-       for i := 0 to High ( TradeType ) do
+        for i := 0 to High ( TradeType ) do
         begin
                 if TradeType[i] <> '' Then
                 tradeTypeList := tradeTypeList + TradeType[i];
