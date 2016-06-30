@@ -115,34 +115,51 @@ type
                 constructor Create(LinkID : String; SecretKey : String);
 
                 // 과금 정보 확인
-                function GetChargeInfo (CorpNum : string) : THometaxCBChargeInfo;
+                function GetChargeInfo (CorpNum : string) : THometaxCBChargeInfo; overload;
+                // 과금 정보 확인
+                function GetChargeInfo (CorpNum : string; UserID : string) : THometaxCBChargeInfo; overload;                
                 
                 // 수집 요청
-                function RequestJob (CorpNum : string; queryType:EnumQueryType; SDate: String; EDate :String) : string;
+                function RequestJob (CorpNum : string; queryType:EnumQueryType; SDate: String; EDate :String) : string; overload;
+                // 수집 요청
+                function RequestJob (CorpNum : string; queryType:EnumQueryType; SDate: String; EDate :String; UserID :String) : string; overload;                
 
                 // 수집 상태 확인
-                function GetJobState ( CorpNum : string; jobID : string) : THometaxCBJobInfo;
+                function GetJobState ( CorpNum : string; jobID : string) : THometaxCBJobInfo; overload;
+                // 수집 상태 확인
+                function GetJobState ( CorpNum : string; jobID : string; UserID :String) : THometaxCBJobInfo; overload;                
 
                 // 수집 상태 목록 확인
-                function ListActiveState (CorpNum : string) : THomeTaxCBJobInfoList;
+                function ListActiveState (CorpNum : string) : THomeTaxCBJobInfoList; overload;
+                // 수집 상태 목록 확인
+                function ListActiveState (CorpNum : string; UserID:String) : THomeTaxCBJobInfoList; overload;
 
                 // 수집결과 조회
-                function Search (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; Page: Integer; PerPage : Integer; Order: String) : THomeTaxCBSearchList;
+                function Search (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; Page: Integer; PerPage : Integer; Order: String) : THomeTaxCBSearchList; overload;
+                // 수집결과 조회
+                function Search (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; Page: Integer; PerPage : Integer; Order: String; UserID: String) : THomeTaxCBSearchList; overload;
 
+                
                 // 수집결과 요약정보 조회
-                function Summary (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String) : TCashbillSummary;
+                function Summary (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String) : TCashbillSummary; overload;
+                // 수집결과 요약정보 조회
+                function Summary (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; UserID:string) : TCashbillSummary; overload;                
 
                 // 정액제 신청 URL
                 function GetFlatRatePopUpURL(CorpNum: string; UserID : String) : string;
 
                 // 정액제 상태 확인
-                function GetFlatRateState (CorpNum : string ) : THometaxCBFlatRate;
+                function GetFlatRateState (CorpNum : string ) : THometaxCBFlatRate; overload;
+                // 정액제 상태 확인
+                function GetFlatRateState (CorpNum : string; UserID: string ) : THometaxCBFlatRate; overload;                
 
                 // 홈택스 공인인증서 등록 URL
                 function GetCertificatePopUpURL(CorpNum: string; UserID : String) : string;
 
                 // 홈택스 공인인증서 만료일자 확인
-                function GetCertificateExpireDate (CorpNum : string) : string;
+                function GetCertificateExpireDate (CorpNum : string) : string; overload;
+                // 홈택스 공인인증서 만료일자 확인
+                function GetCertificateExpireDate (CorpNum : string; UserID: string) : string; overload;
 
         end;
 
@@ -207,22 +224,31 @@ end;
 
 
 function THometaxCBService.GetCertificateExpireDate(CorpNum: string) : string;
+begin
+        result := GetCertificateExpireDate(CorpNum, '');
+end;
+
+function THometaxCBService.GetCertificateExpireDate(CorpNum: string; UserID:string) : string;
 var
         responseJson : String;
 begin
 
-        responseJson := httpget('/HomeTax/Cashbill/CertInfo',CorpNum,'');
+        responseJson := httpget('/HomeTax/Cashbill/CertInfo',CorpNum,UserID);
 
         result := getJSonString(responseJson,'certificateExpiration');
 end;
 
 
-
 function THometaxCBService.GetChargeInfo (CorpNum : string) : THometaxCBChargeInfo;
+begin
+        result := GetChargeInfo(CorpNum, '');
+end;
+
+function THometaxCBService.GetChargeInfo (CorpNum : string; UserID: String) : THometaxCBChargeInfo;
 var
         responseJson : String;
 begin
-        responseJson := httpget('/HomeTax/Cashbill/ChargeInfo',CorpNum,'');
+        responseJson := httpget('/HomeTax/Cashbill/ChargeInfo',CorpNum,UserID);
 
         try
                 result := THometaxCBChargeInfo.Create;
@@ -236,12 +262,17 @@ begin
         end;
 end;
 
-
 function THometaxCBService.GetFlatRateState (CorpNum : string ) : THometaxCBFlatRate;
+begin
+        result := GetFlatRateState(CorpNum, '');
+end;
+
+
+function THometaxCBService.GetFlatRateState (CorpNum : string; UserID:string ) : THometaxCBFlatRate;
 var
         responseJson : String;
 begin
-        responseJson := httpget('/HomeTax/Cashbill/Contract',CorpNum, '');
+        responseJson := httpget('/HomeTax/Cashbill/Contract',CorpNum, UserID);
        
         try
                 result := THometaxCBFlatRate.Create;
@@ -262,6 +293,12 @@ begin
 end;
 
 function THometaxCBService.GetJobState ( CorpNum : string; jobID : string) : THometaxCBJobInfo;
+begin
+        result := GetJobState(CorpNum, jobID, '');
+end;
+
+
+function THometaxCBService.GetJobState ( CorpNum : string; jobID : string; UserID:String) : THometaxCBJobInfo;
 var
         responseJson : string;
 
@@ -273,20 +310,25 @@ begin
         end;
 
 
-        responseJson := httpget('/HomeTax/Cashbill/'+ jobID + '/State', CorpNum, '');
+        responseJson := httpget('/HomeTax/Cashbill/'+ jobID + '/State', CorpNum, UserID);
 
         result := jsonToHTCashbillJobInfo ( responseJson ) ;
 end;
 
-
 function THometaxCBService.ListActiveState (CorpNum : string) : THomeTaxCBJobInfoList;
+begin
+        result := ListActiveState(CorpNum, '');
+end;
+
+
+function THometaxCBService.ListActiveState (CorpNum : string; UserID:string) : THomeTaxCBJobInfoList;
 var
         responseJson : string;
         jSons : ArrayOfString;
         i : Integer;
 begin
 
-        responseJson := httpget('/HomeTax/Cashbill/JobList',CorpNum,'');
+        responseJson := httpget('/HomeTax/Cashbill/JobList',CorpNum,UserID);
 
         if responseJson = '[]' then
         begin
@@ -308,8 +350,13 @@ begin
         end;
 end;
 
-
 function THometaxCBService.Search (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; Page: Integer; PerPage : Integer; Order: String) : THomeTaxCBSearchList;
+begin
+        result := Search(CorpNum, JobID, TradeType, TradeUsage, Page, PerPage, Order, '');
+end;
+
+
+function THometaxCBService.Search (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; Page: Integer; PerPage : Integer; Order: String; UserID:string) : THomeTaxCBSearchList;
 var
         responseJson : string;
         uri : String;
@@ -353,7 +400,7 @@ begin
         uri := uri + '&&Page=' + IntToStr(Page) + '&&PerPage='+ IntToStr(PerPage);
         uri := uri + '&&Order=' + order;
 
-        responseJson := httpget(uri, CorpNum, '');
+        responseJson := httpget(uri, CorpNum, UserID);
         
         result := THometaxCBSearchList.Create;
 
@@ -395,18 +442,28 @@ begin
 end;
 
 function THometaxCBService.RequestJob (CorpNum : string;  queryType:EnumQueryType; SDate: String; EDate: String) : string;
+begin
+        result := RequestJob(CorpNum, queryType, SDate, EDate, '');
+end;
+
+
+function THometaxCBService.RequestJob (CorpNum : string;  queryType:EnumQueryType; SDate: String; EDate: String; USerID:String) : string;
 var
         responseJson : string;
 
 begin
-        responseJson := httppost('/HomeTax/Cashbill/'+GetEnumName(TypeInfo(EnumQueryType),integer(queryType))+'?SDate='+SDate+'&&EDate='+EDate, CorpNum, '', '', '');
+        responseJson := httppost('/HomeTax/Cashbill/'+GetEnumName(TypeInfo(EnumQueryType),integer(queryType))+'?SDate='+SDate+'&&EDate='+EDate, CorpNum, UserID, '', '');
         result := getJsonString(responseJson, 'jobID');
 
 end;
 
-
-
 function THometaxCBService.Summary (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String) : TCashbillSummary;
+begin
+        result := Summary(CorpNum, JobID, TradeType, TradeUsage, '');       
+end;
+
+
+function THometaxCBService.Summary (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; UserID: string) : TCashbillSummary;
 var
         responseJson : string;
         uri : String;
@@ -442,7 +499,7 @@ begin
             uri := '/HomeTax/Cashbill/'+jobID+'/Summary';
         uri := uri + '?TradeType=' + tradeTypeList + '&&TradeUsage=' + tradeUsageList;
        
-        responseJson := httpget(uri, CorpNum, '');
+        responseJson := httpget(uri, CorpNum, UserID);
         
         result := TCashbillSummary.Create;
 
