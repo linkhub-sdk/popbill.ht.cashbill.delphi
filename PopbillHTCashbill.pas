@@ -6,7 +6,7 @@
 *
 * http://www.popbill.com
 * Author : Jeong Yohan (code@linkhub.co.kr)
-* Written : 2016-06-10
+* Written : 2017-02-23
 * Thanks for your interest. 
 *=================================================================================
 *)
@@ -146,7 +146,7 @@ type
                 function Summary (CorpNum:string; JobID: String; TradeType : Array Of String; TradeUsage : Array Of String; UserID:string) : TCashbillSummary; overload;                
 
                 // 정액제 신청 URL
-                function GetFlatRatePopUpURL(CorpNum: string; UserID : String) : string;
+                function GetFlatRatePopUpURL(CorpNum: string; UserID : String = '') : string;
 
                 // 정액제 상태 확인
                 function GetFlatRateState (CorpNum : string ) : THometaxCBFlatRate; overload;
@@ -154,7 +154,7 @@ type
                 function GetFlatRateState (CorpNum : string; UserID: string ) : THometaxCBFlatRate; overload;                
 
                 // 홈택스 공인인증서 등록 URL
-                function GetCertificatePopUpURL(CorpNum: string; UserID : String) : string;
+                function GetCertificatePopUpURL(CorpNum: string; UserID : String = '') : string;
 
                 // 홈택스 공인인증서 만료일자 확인
                 function GetCertificateExpireDate (CorpNum : string) : string; overload;
@@ -201,7 +201,7 @@ end;
 
 
 
-function THometaxCBService.GetFlatRatePopUpURL(CorpNum: string; UserID : String) : string;
+function THometaxCBService.GetFlatRatePopUpURL(CorpNum: string; UserID : String = '') : string;
 var
         responseJson : String;
 begin
@@ -212,7 +212,7 @@ begin
 end;
 
 
-function THometaxCBService.GetCertificatePopUpURL(CorpNum: string; UserID : String) : string;
+function THometaxCBService.GetCertificatePopUpURL(CorpNum: string; UserID : String = '') : string;
 var
         responseJson : String;
 begin
