@@ -6,7 +6,7 @@
 *
 * http://www.popbill.com
 * Author : Jeong Yohan (code@linkhub.co.kr)
-* Written : 2017-02-23
+* Written : 2017-08-30
 * Thanks for your interest. 
 *=================================================================================
 *)
@@ -89,6 +89,7 @@ type
                 customerName            : string;
                 cardOwnerName           : string;
                 deductionType           : Integer;
+                invoiceType             : string;                
 
         end;
 
@@ -433,6 +434,7 @@ begin
                         result.list[i].customerName := getJSonString(jSons[i], 'customerName');
                         result.list[i].cardOwnerName := getJSonString(jSons[i], 'cardOwnerName');
                         result.list[i].deductionType := getJSonInteger(jSons[i], 'deductionType');
+                        result.list[i].invoiceType := getJSonString(jSons[i], 'invoiceType');                        
                 end;
 
         except on E:Exception do
