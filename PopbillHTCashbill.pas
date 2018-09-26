@@ -8,7 +8,7 @@
 * Author : Jeong Yohan (code@linkhub.co.kr)
 * Written : 2017-08-30
 * Contributor : Kim Eunhye (code@linkhub.co.kr)
-* Updated : 2018-09-18
+* Updated : 2018-09-26
 * Thanks for your interest. 
 *=================================================================================
 *)
@@ -76,6 +76,7 @@ type
         THometaxCashbill = class
         public
                 ntsconfirmNum   : string;
+                tradeDate       : string;
                 tradeDT         : string;
                 tradeUsage      : string;
                 tradeType       : string;
@@ -436,6 +437,7 @@ begin
                         result.list[i] := THometaxCashbill.Create;
                         result.list[i].ntsconfirmNum := getJSonString(jSons[i], 'ntsconfirmNum');
                         result.list[i].tradeDT := getJSonString(jSons[i], 'tradeDT');
+                        result.list[i].tradeDate := getJSonString(jSons[i], 'tradeDate');
                         result.list[i].tradeUsage := getJSonString(jSons[i], 'tradeUsage');
                         result.list[i].tradeType := getJSonString(jSons[i], 'tradeType');
                         result.list[i].supplyCost := getJSonString(jSons[i], 'supplyCost');
