@@ -7,7 +7,7 @@
 * http://www.popbill.com
 * Author : Jeong Yohan (code@linkhub.co.kr)
 * Written : 2017-08-30
-* Updated : 2019-03-25
+* Updated : 2019-05-03
 * Thanks for your interest. 
 *=================================================================================
 *)
@@ -798,7 +798,7 @@ end;
 
 function THometaxCBService.CheckCertValidation(CorpNum, UserID: String): TResponse;
 var
-  responseJson : String;
+        responseJson : String;
 begin
         if Trim(CorpNum) = '' then
         begin
@@ -839,7 +839,7 @@ end;
 
 function THometaxCBService.CheckDeptUser(CorpNum, UserID: String): TResponse;
 var
-  responseJson : String;
+        responseJson : String;
 begin
         if Trim(CorpNum) = '' then
         begin
@@ -888,7 +888,7 @@ end;
 
 function THometaxCBService.CheckLoginDeptUser(CorpNum, UserID: String): TResponse;
 var
-  responseJson : String;
+        responseJson : String;
 begin
         if Trim(CorpNum) = '' then
         begin
@@ -937,7 +937,7 @@ end;
 
 function THometaxCBService.DeleteDeptUser(CorpNum, UserID: String): TResponse;
 var
-  responseJson : String;
+        responseJson : String;
 begin
         if Trim(CorpNum) = '' then
         begin
@@ -986,7 +986,7 @@ end;
 
 function THometaxCBService.RegistDeptUser(CorpNum, DeptUserID, DeptUserPWD, UserID: String): TResponse;
 var
-  requestJson, responseJson : String;
+        requestJson, responseJson : String;
 begin
         if Trim(CorpNum) = '' then
         begin
